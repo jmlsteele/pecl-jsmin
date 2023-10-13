@@ -25,6 +25,7 @@ SOFTWARE.
 */
 
 #include <stdio.h>
+#include <stdint.h>
 #include "utf8.h"
 #include "jsmin.h"
 
@@ -77,7 +78,7 @@ jsmin_get(jsmin_obj *jmo)
 	int c = jmo->theLookahead;
 	jmo->theLookahead = 0;
 	if (c == 0) {
-		int byte_len = 0;
+		size_t byte_len = 0;
 		c = u8_nextchar(jmo->javascript, &byte_len);
 		jmo->javascript += byte_len;
 		jmo->byte_len = byte_len;
