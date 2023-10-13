@@ -38,17 +38,18 @@
    <file name="utf8.c" role="src" />
    <file name="utf8.h" role="src" />
    <file name="tests/99-compress-jquery.phpt" role="test" />
+   <file name="tests/buffer-overrun.phpt" role="test" />
    <file name="tests/call-multiple-times.phpt" role="test" />
    <file name="tests/false-on-failure.phpt" role="test" />
    <file name="tests/issue-03-string-type-on-empty-arg.phpt" role="test" />
    <file name="tests/issue-07-no-unexpected-bytes-on-empty.phpt" role="test" />
    <file name="tests/missing-argument.phpt" role="test" />
+   <file name="tests/missing-argument8.phpt" role="test" />
    <file name="tests/strip-comments.phpt" role="test" />
    <file name="tests/unterminated-comment.phpt" role="test" />
    <file name="tests/unterminated-regex.phpt" role="test" />
    <file name="tests/unterminated-string.phpt" role="test" />
-   <file name="tests/utf8_comment.phpt" role="test" />
-   <file name="tests/utf8_string.phpt" role="test" />
+   <file name="tests/utf8-everywhere.phpt" role="test" />
   </dir>
  </contents>
  <dependencies>
