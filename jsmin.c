@@ -62,9 +62,15 @@ free_jsmin_obj(jsmin_obj *jmo)
 static int
 jsmin_isAlphanum(int c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') ||
-		(c >= 'A' && c <= 'Z') || c == '_' || c == '$' || c == '\\' ||
-		c > 126);
+	return (
+		(c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9')
+		|| (c >= 'A' && c <= 'Z')
+		|| c == '_'
+		|| c == '$'
+		|| c == '\\'
+		|| c > 126
+	);
 }
 
 /* jsmin_get -- return the next character from stdin. Watch out for lookahead. If
@@ -162,9 +168,9 @@ jsmin_action(int d, jsmin_obj *jmo)
 	case 1:
 		smart_string_appendc(&jmo->buffer, jmo->theA);
 		if (
-			(jmo->theY == '\n' || jmo->theY == ' ') &&
-			(jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '*' || jmo->theA == '/') &&
-			(jmo->theB == '+' || jmo->theB == '-' || jmo->theB == '*' || jmo->theB == '/')
+			(jmo->theY == '\n' || jmo->theY == ' ')
+			&& (jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '*' || jmo->theA == '/')
+			&& (jmo->theB == '+' || jmo->theB == '-' || jmo->theB == '*' || jmo->theB == '/')
 		) {
 			smart_string_appendc(&jmo->buffer, jmo->theY);
 		}
@@ -191,12 +197,13 @@ jsmin_action(int d, jsmin_obj *jmo)
 		}
 	case 3:
 		jmo->theB = jsmin_next(jmo);
-		if (jmo->theB == '/' && (jmo->theA == '(' || jmo->theA == ',' || jmo->theA == '=' ||
-							jmo->theA == ':' || jmo->theA == '[' || jmo->theA == '!' ||
-							jmo->theA == '&' || jmo->theA == '|' || jmo->theA == '?' ||
-							jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~' ||
-							jmo->theA == '*' || jmo->theA == '/' || jmo->theA == '{' ||
-							jmo->theA == '\n')) {
+		if (jmo->theB == '/' && (
+			jmo->theA == '(' || jmo->theA == ',' || jmo->theA == '=' || jmo->theA == ':'
+			|| jmo->theA == '[' || jmo->theA == '!' || jmo->theA == '&' || jmo->theA == '|'
+			|| jmo->theA == '?' || jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~'
+			|| jmo->theA == '*' || jmo->theA == '/' || jmo->theA == '{' || jmo->theA == '}'
+			|| jmo->theA == ';' || jmo->theA == '\n'
+		)) {
 			smart_string_appendc(&jmo->buffer, jmo->theA);
 			if (jmo->theA == '/' || jmo->theA == '*') {
 				smart_string_appendc(&jmo->buffer, ' ');
