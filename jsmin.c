@@ -164,9 +164,12 @@ jsmin_next(jsmin_obj *jmo)
 static void
 jsmin_action(int d, jsmin_obj *jmo)
 {
+	char wc_bytes[4];
+	int bytes;
 	switch (d) {
 	case 1:
-		smart_string_appendc(&jmo->buffer, jmo->theA);
+		bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
+		smart_string_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 		if (
 			(jmo->theY == '\n' || jmo->theY == ' ')
 			&& (jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '*' || jmo->theA == '/')
@@ -178,8 +181,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 		jmo->theA = jmo->theB;
 		if (jmo->theA == '\'' || jmo->theA == '"' || jmo->theA == '`') {
 			for (;;) {
-				char wc_bytes[4];
-				int bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
+				bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
 				smart_string_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == jmo->theB) {
@@ -213,7 +215,8 @@ jsmin_action(int d, jsmin_obj *jmo)
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == '[') {
 					for (;;) {
-						smart_string_appendc(&jmo->buffer, jmo->theA);
+						bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
+						smart_string_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 						jmo->theA = jsmin_get(jmo);
 						if (jmo->theA == ']') {
 							break;
@@ -243,7 +246,8 @@ jsmin_action(int d, jsmin_obj *jmo)
 					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_REGEX;
 					return;
 				}
-				smart_string_appendc(&jmo->buffer, jmo->theA);
+				bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
+				smart_string_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 			}
 			jmo->theB = jsmin_next(jmo);
 		}
@@ -316,6 +320,5 @@ jsmin(char *javascript)
 			}
 		}
 	}
-
 	return jmo;
 }
