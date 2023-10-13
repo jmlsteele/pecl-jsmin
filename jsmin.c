@@ -202,7 +202,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 			|| jmo->theA == '[' || jmo->theA == '!' || jmo->theA == '&' || jmo->theA == '|'
 			|| jmo->theA == '?' || jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~'
 			|| jmo->theA == '*' || jmo->theA == '/' || jmo->theA == '{' || jmo->theA == '}'
-			|| jmo->theA == ';' || jmo->theA == '\n'
+			|| jmo->theA == ';'
 		)) {
 			smart_string_appendc(&jmo->buffer, jmo->theA);
 			if (jmo->theA == '/' || jmo->theA == '*') {
